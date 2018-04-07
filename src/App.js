@@ -10,9 +10,9 @@ class App extends Component {
   constructor(){
     super();
     const hits = localStorage.getItem('comments');
-    if (hits) {
-      return;
-    }
+    //if (hits) {
+    //  return;
+    //}
     this.getItems(1);
   }
 
@@ -21,13 +21,14 @@ class App extends Component {
       localStorage.setItem('comments', JSON.stringify(this.hits));
       return;
     }
+    console.log(`request: /posts/${p}/comments`);
     fetch(`http://jsonplaceholder.typicode.com/posts/${p}/comments`)
     .then(response => { return response.json() })
     .then((data) => {
       data.forEach(e => {
         this.hits.push(e);
       });
-      this.getItems(data.length > 0 ? p++ : false);
+      this.getItems(data.length > 0 ? ++p : false);
     })
     .catch(error => { console.log('request failed', error); });
   }
