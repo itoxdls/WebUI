@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Comments from './components/comments';
 import Info from './components/info';
 
@@ -33,10 +33,12 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">WebUI Test</h1>
         </header>
-        <Switch>
-          <Route exact path="/" component={Comments}></Route>
-          <Route path="/info/:number" component={Info}></Route>
-        </Switch>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Comments}/>
+            <Route path="/info/:number" component={Info}/>
+          </Switch>
+        </Router>
       </div>
     );
   }
