@@ -31,7 +31,7 @@ class Info extends Component {
                     <Glyphicon glyph="align-right"/> Back
                 </Button>
                 <article key={item.id}>
-                    <h1 className="article-title">{item.name}</h1>
+                    <h1 className="article-title">{`id: ${item.id} - ${item.name}`}</h1>
                     <div className="article-mail">{item.email}</div>
                     <p className="article-comment">{item.body}</p>
                 </article>

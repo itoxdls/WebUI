@@ -1,13 +1,6 @@
-.breadcrumb {
-    list-style: none;
-}
-.breadcrumb li {
-    padding: 5px;
-}
 article {
-    border: 1px solid #fff;
+    border-color: #fff;
     padding: 10px;
-    margin: 5px;
 }
 article > .article-mail {
     color:#666;
