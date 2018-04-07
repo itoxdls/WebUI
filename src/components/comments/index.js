@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import DocumentMeta from 'react-document-meta';
+import Substring from '../../Substring';
+import { Link } from 'react-router-dom';
 
 import './style.css';
 
@@ -14,24 +17,27 @@ class Comments extends Component {
         }
     }
 
-    subStringText(text, length){
-        return text.length <= length ? text : text.slice(0, length - 3) + '...';
-    }
-
     render() {
+        const meta = {
+            title: 'WebUI Test',
+            description: 'WebUI Test'
+        };
         return (
-            <section>
-                {
-                this.state.hits &&
-                this.state.hits.map((item, key) => 
-                    <article key={key}>
-                        <h1 className="article-title">{this.subStringText(item.name, 20)}</h1>
-                        <div className="article-mail">{item.email}</div>
-                        <p className="article-comment">{this.subStringText(item.body, 30)}</p>
-                    </article>
-                    )
-                }
-            </section>
+            <DocumentMeta {...meta}>
+                <section>
+                    {
+                    this.state.hits &&
+                    this.state.hits.map((item, key) => 
+                        <article key={item.id}>
+                            <h1 className="article-title"><Substring text={item.name} length="20"/></h1>
+                            <div className="article-mail">{item.email}</div>
+                            <p className="article-comment"><Substring text={item.body} length="30"/></p>
+                            <Link to={`/info/${key}`}>View</Link>
+                        </article>
+                        )
+                    }
+                </section>
+            </DocumentMeta>
         );
     }
 }

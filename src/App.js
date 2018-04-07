@@ -33,12 +33,14 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">WebUI Test</h1>
         </header>
-        <Router>
-          <Switch>
-            <Route exact path="/" component={Comments}/>
-            <Route path="/info/:number" component={Info}/>
-          </Switch>
-        </Router>
+        <main>
+          <Router>
+            <Switch>
+              <Route exact path="/" component={Comments}/>
+              <Route path="/info/:id" component={Info}/>
+            </Switch>
+          </Router>
+        </main>
       </div>
     );
   }
