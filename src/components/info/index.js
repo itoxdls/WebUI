@@ -1,39 +1,54 @@
 import React, { Component } from 'react';
 import { Button, Glyphicon } from 'react-bootstrap';
 import DocumentMeta from 'react-document-meta';
+import LocalComments from '../../LocalComments';
 import './style.css';
 
 class Info extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            items: []
+        };
+    }
+
+    componentDidMount() {
+        const { match : { params } } = this.props;
+        const localComments = new LocalComments();
+        localComments
+        .getHits()
+        .then((data) => {
+            console.log('end');
+            this.setState({
+                item: data[params.id]
+            });
+        })
+        .catch(error => console.error(error))
+    }
+
     goBack(){
         window.history.back();
     }
 
     render() {
-        const { match : { params } } = this.props;
-        
-        const hits = localStorage.getItem('comments');
-        const hitsson = JSON.parse(hits);
-        if (!hits || !hitsson[params.id]) {
+        if (!this.state.item) {
             return (
-                <h1>Empty info</h1>
+                <h1>Loading...</h1>
             );
         }
-        
-        let item = hitsson[params.id];
         const meta = {
-            title: `${item.name} - WebUI Test`,
-            description: item.name
+            title: `${this.state.item.name} - WebUI Test`,
+            description: this.state.item.name
         };
-
         return (
             <DocumentMeta {...meta}>
                 <Button bsStyle="link" onClick={()=>this.goBack()}>
                     <Glyphicon glyph="align-right"/> Back
                 </Button>
-                <article key={item.id}>
-                    <h1 className="article-title">{`id: ${item.id} - ${item.name}`}</h1>
-                    <div className="article-mail">{item.email}</div>
-                    <p className="article-comment">{item.body}</p>
+                <article key={this.state.item.id}>
+                    <h1 className="article-title">{`id: ${this.state.item.id} - ${this.state.item.name}`}</h1>
+                    <div className="article-mail">{this.state.item.email}</div>
+                    <p className="article-comment">{this.state.item.body}</p>
                 </article>
             </DocumentMeta>
         );
