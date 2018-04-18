@@ -16,7 +16,10 @@ commentStore.all().map((comment:Comment) => {
   console.log(comment);
 });
 */
-var asyncPromise = function(postId:number){
+/* 
+  Return a list with all comments of every post
+*/
+const asyncPromise = (postId:number) => {
   return new Promise((resolve, reject) => {
     fetch(`http://jsonplaceholder.typicode.com/posts/${postId}/comments`,{})
     .then(response => { return response.json() })
@@ -28,6 +31,9 @@ var asyncPromise = function(postId:number){
     });
   });
 }
+/* 
+  Load all post for create a promise for load the comments 
+*/
 fetch('http://jsonplaceholder.typicode.com/posts',{})
 .then(response => { return response.json() })
 .then((posts:Post[]) => {
@@ -39,6 +45,7 @@ fetch('http://jsonplaceholder.typicode.com/posts',{})
 }).then((requestPromise) => {
   Promise.all(requestPromise)
   .then(() => {
+    console.log('comment length: ' + commentStore.all().length);
     console.log('End');
   });
 });

@@ -3,6 +3,7 @@ import DocumentMeta from 'react-document-meta';
 import LocalComments from '../../LocalComments';
 import Substring from '../../Substring';
 import { Link } from 'react-router-dom';
+import {localCommentStore} from '../../store/LocalCommentStore';
 
 import './style.css';
 
@@ -13,6 +14,7 @@ class Comments extends Component {
         this.state = {
             items: []
         };
+        //console.log('total: ' + localCommentStore.getComments().length);
     }
 
     componentDidMount() {
@@ -29,6 +31,7 @@ class Comments extends Component {
     }
 
     render() {
+        
         const meta = {
             title: 'WebUI Test',
             description: 'WebUI Test'
