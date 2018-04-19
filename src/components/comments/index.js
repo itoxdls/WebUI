@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import DocumentMeta from 'react-document-meta';
-import LocalComments from '../../LocalComments';
 import Substring from '../../Substring';
 import { Link } from 'react-router-dom';
 import {localCommentStore} from '../../store/LocalCommentStore';
@@ -14,29 +13,20 @@ class Comments extends Component {
         this.state = {
             items: []
         };
-        //console.log('total: ' + localCommentStore.getComments().length);
     }
-
     componentDidMount() {
-        const localComments = new LocalComments();
-        localComments
-        .getHits()
-        .then((data) => {
-            console.log('end');
+        localCommentStore.getComments((items) => {
             this.setState({
-                items: data
+                items: items
             });
-        })
-        .catch(error => console.error(error))
+        });
     }
 
     render() {
-        
         const meta = {
             title: 'WebUI Test',
             description: 'WebUI Test'
         };
-        console.log(this.state.items.length);
         return (
             <DocumentMeta {...meta}>
                 <section>

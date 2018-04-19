@@ -1,6 +1,7 @@
-import fetch from 'node-fetch'
-import {Post} from "../models/Post";
-import {Comment} from "../models/Comment";
+//@flow
+//import fetch from 'node-fetch'
+import type {Post} from "../models/Post";
+import type {Comment} from "../models/Comment";
 import {commentService} from "../services/CommentService";
 import {commentStore} from "../store/CommentStore"
 
@@ -9,6 +10,7 @@ import {commentStore} from "../store/CommentStore"
 */
 const asyncPromise = (postId:number) => {
     return new Promise((resolve, reject) => {
+        console.log(`http://jsonplaceholder.typicode.com/posts/${postId}/comments`);
         fetch(`http://jsonplaceholder.typicode.com/posts/${postId}/comments`,{})
         .then(response => { return response.json() })
         .then((comments:Comment[]) => {
@@ -24,7 +26,7 @@ export type LocalCommentStore = {
   getComments(): Comment[];
 };
 // Load all post for create a promise for load the comments 
-export const loadComments = (): void => {
+export const loadComments = (callback:Function): void => {
     console.log('constructor');
     fetch('http://jsonplaceholder.typicode.com/posts',{})
     .then(response => { return response.json() })
@@ -38,20 +40,17 @@ export const loadComments = (): void => {
         Promise.all(requestPromise)
         .then(() => {
             console.log('comment length: ' + commentStore.all().length);
-            console.log('End');
+            callback(commentStore.all());
         });
-    });;
+    });
 };
-export const getComments = (): Comment[] => {
-    return commentStore.all();
+export const getComments = (callback:Function): void => {
+    callback(commentStore.all());
 };
 export const LocalCommentStoreFactory = (() => {
-    if(commentStore.all().length <= 0){
-        loadComments();
-    }
     return {
-      getComments:() => {
-        return getComments();
+      getComments:(callback:Function): void => {
+        return commentStore.all().length <= 0 ? loadComments(callback) : getComments(callback);
       }
     }
 });

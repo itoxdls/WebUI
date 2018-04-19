@@ -1,5 +1,5 @@
-import {Post} from "../models/Post";
-import {PostState} from "./PostState";
+import type {Post} from "../models/Post";
+import type {PostState} from "./PostState";
 
 export type PostStore = {
     addPost(post: Post): void;

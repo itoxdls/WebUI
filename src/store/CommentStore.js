@@ -1,5 +1,6 @@
-import {Comment} from "../models/Comment";
-import {CommentState} from "./CommentState";
+//@flow
+import type {Comment} from "../models/Comment";
+import type {CommentState} from "./CommentState";
 
 export type CommentStore = {
   addComment(comment: Comment): void;

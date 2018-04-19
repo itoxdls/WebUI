@@ -1,0 +1,59 @@
+'use strict';Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/var/www/web-ui/src/components/comments/index.js';var _react = require('react');var _react2 = _interopRequireDefault(_react);
+var _reactDocumentMeta = require('react-document-meta');var _reactDocumentMeta2 = _interopRequireDefault(_reactDocumentMeta);
+var _LocalComments = require('../../LocalComments');var _LocalComments2 = _interopRequireDefault(_LocalComments);
+var _Substring = require('../../Substring');var _Substring2 = _interopRequireDefault(_Substring);
+var _reactRouterDom = require('react-router-dom');
+var _LocalCommentStore = require('../../store/LocalCommentStore');
+
+require('./style.css');function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+class Comments extends _react.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            items: [] };
+
+        //console.log('total: ' + localCommentStore.getComments().length);
+    }
+
+    componentDidMount() {
+        const localComments = new _LocalComments2.default();
+        localComments.
+        getHits().
+        then(data => {
+            console.log('end');
+            this.setState({
+                items: data });
+
+        }).
+        catch(error => console.error(error));
+    }
+
+    render() {
+
+        const meta = {
+            title: 'WebUI Test',
+            description: 'WebUI Test' };
+
+        console.log(this.state.items.length);
+        return (
+            _react2.default.createElement(_reactDocumentMeta2.default, Object.assign({}, meta, { __source: { fileName: _jsxFileName, lineNumber: 41 }, __self: this }),
+                _react2.default.createElement('section', { __source: { fileName: _jsxFileName, lineNumber: 42 }, __self: this },
+
+                    this.state.items.map((item, key) =>
+                    _react2.default.createElement('article', { key: item.id, __source: { fileName: _jsxFileName, lineNumber: 45 }, __self: this },
+                        _react2.default.createElement('h1', { className: 'article-title', __source: { fileName: _jsxFileName, lineNumber: 46 }, __self: this }, _react2.default.createElement(_Substring2.default, { text: item.name, length: '20', __source: { fileName: _jsxFileName, lineNumber: 46 }, __self: this })),
+                        _react2.default.createElement('div', { className: 'article-mail', __source: { fileName: _jsxFileName, lineNumber: 47 }, __self: this }, item.email),
+                        _react2.default.createElement('p', { className: 'article-comment', __source: { fileName: _jsxFileName, lineNumber: 48 }, __self: this }, _react2.default.createElement(_Substring2.default, { text: item.body, length: '30', __source: { fileName: _jsxFileName, lineNumber: 48 }, __self: this })),
+                        _react2.default.createElement(_reactRouterDom.Link, { to: `/info/${key}`, __source: { fileName: _jsxFileName, lineNumber: 49 }, __self: this }, 'View'))))));
+
+
+
+
+
+
+    }}exports.default =
+
+
+Comments;

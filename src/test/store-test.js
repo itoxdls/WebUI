@@ -1,6 +1,6 @@
-import fetch from 'node-fetch'
-import {Post} from "../models/Post";
-import {Comment} from "../models/Comment";
+//import fetch from 'node-fetch'
+import type {Post} from "../models/Post";
+import type {Comment} from "../models/Comment";
 import {commentService} from "../services/CommentService";
 import {commentStore} from "../store/CommentStore"
 /*

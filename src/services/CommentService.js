@@ -1,5 +1,5 @@
 // @flow
-import {Comment} from "../models/Comment";
+import type {Comment} from "../models/Comment";
 
 export type CommentService = {
     createComment(comment: Comment):Boolean;
