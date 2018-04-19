@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import DocumentMeta from 'react-document-meta';
-import Substring from '../../services/CommentUiService';
-import { Link } from 'react-router-dom';
+import Article from '../../components/article';
 
 import {localCommentStore} from '../../store/LocalCommentStore';
 
@@ -28,20 +27,12 @@ class Comments extends Component {
             title: 'WebUI Test',
             description: 'WebUI Test'
         };
+        const items = this.state.items.map((item, key) => 
+            <Article key={key} id={item.id} name={item.name} body={item.body} email={item.email}/>
+        )
         return (
             <DocumentMeta {...meta}>
-                <section>
-                {
-                    this.state.items.map((item, key) => 
-                        <article key={key}>
-                            <h1 className="article-title"><Substring text={item.name} length="20"/></h1>
-                            <div className="article-mail">{item.email}</div>
-                            <p className="article-comment"><Substring text={item.body} length="30"/></p>
-                            <Link to={`/info/${item.id}`}>View</Link>
-                        </article>
-                    )
-                }
-                </section>
+                <section>{items}</section>
             </DocumentMeta>
         );
     }
