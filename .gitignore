@@ -9,6 +9,9 @@
 # production
 /build
 
+# jest
+/jest_0
+
 # misc
 .DS_Store
 .env.local
