@@ -3,6 +3,9 @@
 # dependencies
 /node_modules
 
+# Firefox
+/firefox_root
+
 # testing
 /coverage
 
