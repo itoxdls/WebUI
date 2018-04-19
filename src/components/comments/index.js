@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import DocumentMeta from 'react-document-meta';
-import Substring from '../../Substring';
+import Substring from '../../services/CommentUiService';
 import { Link } from 'react-router-dom';
+
 import {localCommentStore} from '../../store/LocalCommentStore';
 
 import './style.css';

@@ -1,4 +1,3 @@
-
 function Substring (props){
     return props.text.length <= props.length 
         ? props.text 
