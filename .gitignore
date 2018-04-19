@@ -9,6 +9,9 @@
 # production
 /build
 
+# VSCode
+.vscode
+
 # jest
 /jest_0
 
