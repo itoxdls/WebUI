@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Glyphicon } from 'react-bootstrap';
 import DocumentMeta from 'react-document-meta';
-import LocalComments from '../../LocalComments';
+import {localCommentStore} from '../../store/LocalCommentStore';
 import './style.css';
 
 class Info extends Component {
@@ -14,16 +14,11 @@ class Info extends Component {
 
     componentDidMount() {
         const { match : { params } } = this.props;
-        const localComments = new LocalComments();
-        localComments
-        .getHits()
-        .then((data) => {
-            console.log('end');
+        localCommentStore.getComments(() => {
             this.setState({
-                item: data[params.id]
+                item: localCommentStore.getComment(params.id)
             });
-        })
-        .catch(error => console.error(error))
+        });
     }
 
     goBack(){

@@ -32,11 +32,11 @@ class Comments extends Component {
                 <section>
                 {
                     this.state.items.map((item, key) => 
-                        <article key={item.id}>
+                        <article key={key}>
                             <h1 className="article-title"><Substring text={item.name} length="20"/></h1>
                             <div className="article-mail">{item.email}</div>
                             <p className="article-comment"><Substring text={item.body} length="30"/></p>
-                            <Link to={`/info/${key}`}>View</Link>
+                            <Link to={`/info/${item.id}`}>View</Link>
                         </article>
                     )
                 }

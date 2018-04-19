@@ -23,11 +23,31 @@ const asyncPromise = (postId:number) => {
 }
 export type LocalCommentStore = {
   loadComments(): void;
-  getComments(): Comment[];
+  getComments(callback:Function): Comment[];
+  getComment(id:number): Comment;
 };
+export const loadCommentsLocalStorage = () : boolean => {
+    // Check if exist data in local storage
+    let data = localStorage.getItem("comments");
+    // If exist data, load comments from here
+    if (data) {
+        let dataList = JSON.parse(data);
+        dataList.forEach(element => {
+            commentStore.addComment(commentService.createComment(element));
+        });
+        return true;
+    }
+    return false;
+}
 // Load all post for create a promise for load the comments 
 export const loadComments = (callback:Function): void => {
-    console.log('constructor');
+    
+    // Check if load from local store
+    if(loadCommentsLocalStorage()){
+        callback(commentStore.all());
+        return;
+    }
+
     fetch('http://jsonplaceholder.typicode.com/posts',{})
     .then(response => { return response.json() })
     .then((posts:Post[]) => {
@@ -40,6 +60,10 @@ export const loadComments = (callback:Function): void => {
         Promise.all(requestPromise)
         .then(() => {
             console.log('comment length: ' + commentStore.all().length);
+            
+            // Save in local storage
+            localStorage.setItem("comments", JSON.stringify(commentStore.all()));
+
             callback(commentStore.all());
         });
     });
@@ -47,10 +71,16 @@ export const loadComments = (callback:Function): void => {
 export const getComments = (callback:Function): void => {
     callback(commentStore.all());
 };
+export const getComment = (id:number): Comment => {
+    return commentStore.getComment(id);
+};
 export const LocalCommentStoreFactory = (() => {
     return {
       getComments:(callback:Function): void => {
         return commentStore.all().length <= 0 ? loadComments(callback) : getComments(callback);
+      },
+      getComment:(id:number): Comment => {
+        return getComment(id);
       }
     }
 });
